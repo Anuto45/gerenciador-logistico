@@ -63,5 +63,5 @@ O esboço das telas (Etapa 1) está em [`docs/Etapa1_Telas_Prototipo.pdf`](docs/
 
 ## Autor
 
-Antonio "09052195" — aluno da UNIPAR EAD.
+Antonio Anuto — RA 09052195 — Polo [SEU POLO] — Análise e Desenvolvimento de Sistemas, UNIPAR EAD.
 
