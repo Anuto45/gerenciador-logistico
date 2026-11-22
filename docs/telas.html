@@ -1,0 +1,90 @@
+<!DOCTYPE html><html lang="pt-br"><head><meta charset="utf-8"><title>Protótipo de telas</title>
+<style>
+@page{size:A4 landscape;margin:12mm}
+body{font-family:Arial,Helvetica,sans-serif;color:#222;margin:0}
+.pag{page-break-after:always;padding:4mm}
+h1{font-size:20px;margin:0 0 2px}h2{font-size:15px;color:#555;margin:0 0 8px;font-weight:normal}
+.tela{border:2px solid #444;border-radius:6px;width:100%;background:#fafafa;overflow:hidden}
+.nav{background:#0d6efd;color:#fff;padding:8px 12px;display:flex;justify-content:space-between;font-size:12px}
+.nav b{font-size:14px}.nav span{margin-left:14px}.nav .at{font-weight:bold;text-decoration:underline}
+.corpo{padding:12px}
+.row{display:flex;gap:10px;margin-bottom:8px}.c{flex:1}
+.lbl{font-size:10px;color:#555;margin-bottom:2px}
+.inp{border:1px solid #888;background:#fff;border-radius:3px;height:22px;font-size:10px;padding:3px 6px;box-sizing:border-box;color:#888}
+.btn{display:inline-block;border-radius:3px;padding:5px 10px;font-size:11px;color:#fff;background:#0d6efd;margin-right:4px}
+.btn.o{background:#fff;color:#0d6efd;border:1px solid #0d6efd}.btn.r{background:#fff;color:#dc3545;border:1px solid #dc3545}.btn.g{background:#198754}
+table{border-collapse:collapse;width:100%;font-size:10px;background:#fff}th,td{border:1px solid #bbb;padding:5px 6px;text-align:left}th{background:#e3e9f3}
+.card{border:1px solid #bbb;background:#fff;border-radius:4px;padding:10px;font-size:11px}
+.num{font-size:22px;font-weight:bold}
+.nota{margin-top:8px;font-size:11px;color:#444;background:#fff8d6;border:1px dashed #c9a800;padding:6px 8px}
+.fluxo{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:12px}.fluxo div{border:2px solid #0d6efd;border-radius:6px;padding:10px 14px;background:#eef4ff}
+</style></head><body>
+
+<div class="pag">
+<h1>Gerenciador Logístico — Protótipo das telas (Etapa 1 – Análise)</h1>
+<h2>APO · Fundamentos de Programação para Internet · UNIPAR EAD · Framework visual: Bootstrap 5</h2>
+<p style="font-size:13px"><b>Problema:</b> controlar o transporte de mercadorias cadastrando produtos, endereços (origem/destino) e transportadores, e gerando fretes que relacionam esses dados — um transportador pode levar vários produtos (1 para N) — com relatório diário para download.</p>
+<p style="font-size:13px"><b>Mapa de navegação</b> (menu superior fixo em todas as telas):</p>
+<div class="fluxo">
+<div>1. Início<br>(painel)</div>→<div>2. Listas<br>Produtos · Endereços · Transportadores</div>→<div>3. Formulário<br>cadastro/edição</div>→<div>4. Novo frete<br>(campos dinâmicos)</div>→<div>5. Detalhe do frete</div>→<div>6. Relatório diário<br>(CSV)</div>
+</div>
+<p style="font-size:13px"><b>Boas práticas de UX adotadas:</b> navegação consistente e sempre visível; rótulos claros e campos obrigatórios marcados com *; feedback após cada ação (mensagens de sucesso/erro); confirmação antes de excluir; máscaras de CEP, CNPJ e telefone; totais calculados em tempo real no frete; layout responsivo; poucos elementos por tela (hierarquia visual simples).</p>
+<p style="font-size:13px"><b>Modelo de dados:</b> produtos · enderecos · transportadores · fretes (transportador, origem, destino, data) · frete_produtos (frete, produto, quantidade) — relação 1:N entre frete e produtos.</p>
+</div>
+
+<!-- 1 -->
+<div class="pag"><h1>Tela 1 — Início (painel)</h1><h2>Resumo e atalhos principais</h2>
+<div class="tela"><div class="nav"><b>🚚 Logística</b><div><span class="at">Início</span><span>Produtos</span><span>Endereços</span><span>Transportadores</span><span>Fretes</span><span>Relatório diário</span></div></div>
+<div class="corpo"><div class="row" style="margin-bottom:12px">
+<div class="c card"><div class="num">3</div>Produtos</div><div class="c card"><div class="num">2</div>Endereços</div><div class="c card"><div class="num">1</div>Transportadores</div><div class="c card"><div class="num">5</div>Fretes</div></div>
+<div class="card" style="display:flex;justify-content:space-between;align-items:center"><span><b>2</b> fretes hoje (19/11/2026)</span><span><span class="btn">+ Novo frete</span><span class="btn o">Relatório do dia</span></span></div></div></div>
+<div class="nota">Cada cartão leva à lista correspondente. Os botões da parte inferior levam às ações mais usadas.</div></div>
+
+<!-- 2 -->
+<div class="pag"><h1>Tela 2 — Lista (Produtos / Endereços / Transportadores)</h1><h2>Mesma estrutura nas três listas</h2>
+<div class="tela"><div class="nav"><b>🚚 Logística</b><div><span>Início</span><span class="at">Produtos</span><span>Endereços</span><span>Transportadores</span><span>Fretes</span><span>Relatório diário</span></div></div>
+<div class="corpo"><div class="row" style="justify-content:space-between;align-items:center"><b style="font-size:16px">Produtos</b><span class="btn">+ Novo produto</span></div>
+<table><tr><th>#</th><th>Nome</th><th>Descrição</th><th>Peso (kg)</th><th>Valor</th><th></th></tr>
+<tr><td>1</td><td>Notebook 15"</td><td>Notebook corporativo</td><td>2,100</td><td>R$ 3.500,00</td><td><span class="btn o">✎</span><span class="btn r">🗑</span></td></tr>
+<tr><td>2</td><td>Monitor 24"</td><td>Monitor Full HD</td><td>3,800</td><td>R$ 890,00</td><td><span class="btn o">✎</span><span class="btn r">🗑</span></td></tr>
+<tr><td>3</td><td>Teclado mecânico</td><td>Layout ABNT2</td><td>0,900</td><td>R$ 320,00</td><td><span class="btn o">✎</span><span class="btn r">🗑</span></td></tr></table></div></div>
+<div class="nota">Editar abre o formulário preenchido. Excluir pede confirmação; itens usados em fretes não podem ser excluídos (mensagem explicativa).</div></div>
+
+<!-- 3 -->
+<div class="pag"><h1>Tela 3 — Formulário de cadastro/edição (exemplo: Endereço)</h1><h2>Produto e Transportador seguem o mesmo padrão com seus próprios campos</h2>
+<div class="tela"><div class="nav"><b>🚚 Logística</b><div><span>Início</span><span>Produtos</span><span class="at">Endereços</span><span>Transportadores</span><span>Fretes</span><span>Relatório diário</span></div></div>
+<div class="corpo"><b style="font-size:16px">Novo endereço</b><br><br>
+<div class="row"><div class="c" style="flex:2"><div class="lbl">Apelido *</div><div class="inp">Matriz</div></div><div class="c"><div class="lbl">CEP *</div><div class="inp">00000-000</div></div></div>
+<div class="row"><div class="c" style="flex:3"><div class="lbl">Logradouro *</div><div class="inp"></div></div><div class="c"><div class="lbl">Número *</div><div class="inp"></div></div></div>
+<div class="row"><div class="c"><div class="lbl">Complemento</div><div class="inp"></div></div><div class="c"><div class="lbl">Bairro *</div><div class="inp"></div></div><div class="c"><div class="lbl">Cidade *</div><div class="inp"></div></div><div class="c" style="flex:.5"><div class="lbl">UF *</div><div class="inp">PR ▾</div></div></div>
+<span class="btn">Salvar</span><span class="btn o">Cancelar</span></div></div>
+<div class="nota">Campos obrigatórios marcados com *. CEP/CNPJ/telefone com máscara (sem validar autenticidade). Erros aparecem em alertas vermelhos acima do formulário.</div></div>
+
+<!-- 4 -->
+<div class="pag"><h1>Tela 4 — Novo frete</h1><h2>Seleção de transportador, origem, destino e campos dinâmicos de produtos (JavaScript)</h2>
+<div class="tela"><div class="nav"><b>🚚 Logística</b><div><span>Início</span><span>Produtos</span><span>Endereços</span><span>Transportadores</span><span class="at">Fretes</span><span>Relatório diário</span></div></div>
+<div class="corpo">
+<div class="row"><div class="c"><div class="lbl">Transportador *</div><div class="inp">Selecione ▾</div></div><div class="c"><div class="lbl">Origem *</div><div class="inp">Selecione ▾</div></div><div class="c"><div class="lbl">Destino *</div><div class="inp">Selecione ▾</div></div></div>
+<div class="row"><div class="c" style="flex:.5"><div class="lbl">Data *</div><div class="inp">19/11/2026</div></div><div class="c"><div class="lbl">Observação</div><div class="inp"></div></div></div>
+<b style="font-size:13px">Produtos transportados</b>
+<div class="card row" style="margin:6px 0;align-items:flex-end"><div class="c" style="flex:3"><div class="lbl">Produto</div><div class="inp">Notebook 15" ▾</div></div><div class="c"><div class="lbl">Qtd</div><div class="inp">2</div></div><span class="btn r">✕ Remover</span></div>
+<div class="card row" style="margin:6px 0;align-items:flex-end"><div class="c" style="flex:3"><div class="lbl">Produto</div><div class="inp">Monitor 24" ▾</div></div><div class="c"><div class="lbl">Qtd</div><div class="inp">3</div></div><span class="btn r">✕ Remover</span></div>
+<span class="btn o">+ Adicionar produto</span>
+<div class="card" style="margin:8px 0;display:flex;justify-content:space-between;background:#eee"><span>Peso total: <b>15,600 kg</b></span><span>Valor total da carga: <b>R$ 9.670,00</b></span></div>
+<span class="btn">Gerar frete</span><span class="btn o">Cancelar</span></div></div>
+<div class="nota">"Adicionar produto" cria uma nova linha sem recarregar a página; "Remover" apaga a linha. Os totais são recalculados na hora.</div></div>
+
+<!-- 5 -->
+<div class="pag"><h1>Tela 5 — Detalhe do frete</h1><h2>Resumo com transportador, origem, destino e produtos</h2>
+<div class="tela"><div class="nav"><b>🚚 Logística</b><div><span>Início</span><span>Produtos</span><span>Endereços</span><span>Transportadores</span><span class="at">Fretes</span><span>Relatório diário</span></div></div>
+<div class="corpo"><div class="row" style="justify-content:space-between"><b style="font-size:16px">Frete #2 · 19/11/2026</b><span><span class="btn o">Imprimir</span><span class="btn o">Voltar</span></span></div>
+<div class="row"><div class="c card"><b>TRANSPORTADOR</b><br>Rápido Sul Transportes<br>CNPJ · telefone · placa</div><div class="c card"><b>ORIGEM</b><br>Matriz – Umuarama<br>Rua, nº, bairro, CEP</div><div class="c card"><b>DESTINO</b><br>Filial – Cascavel<br>Rua, nº, bairro, CEP</div></div>
+<table><tr><th>Produto</th><th>Qtd</th><th>Peso unit.</th><th>Valor unit.</th><th>Subtotal</th></tr><tr><td>Notebook 15"</td><td>2</td><td>2,100</td><td>R$ 3.500,00</td><td>R$ 7.000,00</td></tr><tr><td>Monitor 24"</td><td>3</td><td>3,800</td><td>R$ 890,00</td><td>R$ 2.670,00</td></tr><tr><th colspan="2">Totais</th><th colspan="2">15,600 kg</th><th>R$ 9.670,00</th></tr></table></div></div></div>
+
+<!-- 6 -->
+<div class="pag"><h1>Tela 6 — Relatório diário de fretes</h1><h2>Consulta por data e download em CSV (abre no Excel)</h2>
+<div class="tela"><div class="nav"><b>🚚 Logística</b><div><span>Início</span><span>Produtos</span><span>Endereços</span><span>Transportadores</span><span>Fretes</span><span class="at">Relatório diário</span></div></div>
+<div class="corpo"><div class="card row" style="align-items:flex-end;margin-bottom:10px"><div><div class="lbl">Data</div><div class="inp" style="width:120px">19/11/2026</div></div><span class="btn">Consultar</span><span class="btn g">⬇ Baixar relatório (CSV)</span><span class="btn o">Imprimir</span></div>
+<p style="font-size:11px"><b>3</b> linhas em 19/11/2026 — total da carga: <b>R$ 9.990,00</b></p>
+<table><tr><th>Frete</th><th>Transportador</th><th>Origem</th><th>Destino</th><th>Produto</th><th>Qtd</th><th>Subtotal</th></tr><tr><td>#2</td><td>Rápido Sul</td><td>Matriz</td><td>Filial</td><td>Notebook 15"</td><td>2</td><td>R$ 7.000,00</td></tr><tr><td>#2</td><td>Rápido Sul</td><td>Matriz</td><td>Filial</td><td>Monitor 24"</td><td>3</td><td>R$ 2.670,00</td></tr></table></div></div></div>
+</body></html>

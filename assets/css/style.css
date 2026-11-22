@@ -1,0 +1,9 @@
+body { background: #f4f6f9; }
+.card { border: 0; box-shadow: 0 1px 4px rgba(0, 0, 0, .08); }
+.card-resumo .numero { font-size: 2rem; font-weight: 700; }
+.table thead th { background: #e9eef6; white-space: nowrap; }
+.linha-produto { background: #fff; border: 1px solid #dee2e6; border-radius: .5rem; padding: .75rem; }
+@media print {
+    nav, footer, .no-print { display: none !important; }
+    body { background: #fff; }
+}
